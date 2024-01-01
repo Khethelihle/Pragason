@@ -16,9 +16,9 @@ public class AwsProjectPragasonBackendApiApplication {
         String access_key = CredentialsHelper.getAccessKey();
         String secrete_key = CredentialsHelper.getSecretKey();
 
-        AmazonDynamoDB client = DynamoDBFactory.getClient();
-        DynamoDbClient dynamoDbClient = DynamoDBFactory.getDynamoDbClient();
-        TableCreator.createTable(client, dynamoDbClient);
+//        AmazonDynamoDB client = DynamoDBFactory.getClient();
+//        DynamoDbClient dynamoDbClient = DynamoDBFactory.getDynamoDbClient();
+//        TableCreator.createTable(client, dynamoDbClient);
 
 
     }
