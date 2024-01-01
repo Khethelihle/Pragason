@@ -22,7 +22,7 @@ public class CredentialsHelper {
     }
 
     public static String getSecretKey() throws Exception {
-        String secretKey = null;
+        String secretKey = "null";
         File file = new File("C:\\Temp\\creds.txt");
         try {
             Scanner sc = new Scanner(file);
