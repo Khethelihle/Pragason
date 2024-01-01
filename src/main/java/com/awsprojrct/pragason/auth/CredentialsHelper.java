@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class CredentialsHelper {
     public static String getAccessKey() {
         String accessKey = null;
-        File file = new File("C:\\Users\\mlambokm\\Documents\\keys\\creds.txt");
+        File file = new File("C:\\Temp\\creds.txt");
         try {
             Scanner sc = new Scanner(file);
             accessKey = sc.nextLine();
@@ -20,7 +20,7 @@ public class CredentialsHelper {
 
     public static String getSecretKey() {
         String secretKey = null;
-        File file = new File("C:\\Users\\mlambokm\\Documents\\keys\\creds.txt");
+        File file = new File("C:\\Temp\\creds.txt");
         try {
             Scanner sc = new Scanner(file);
             sc.nextLine();
