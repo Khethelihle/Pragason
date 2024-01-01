@@ -9,7 +9,7 @@ public class AwsProjectPragasonBackendApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(AwsProjectPragasonBackendApiApplication.class, args);
 
-        System.out.print("Code Setup Complete !");
+        System.out.print("Github Changes !");
     }
 
 }
