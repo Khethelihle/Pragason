@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class CredentialsHelper {
-    public static String getAccessKey() {
+    public static String getAccessKey() throws Exception {
         String accessKey = null;
         File file = new File("C:\\Temp\\creds.txt");
         try {
@@ -13,12 +13,15 @@ public class CredentialsHelper {
             accessKey = sc.nextLine();
             sc.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            FileNotFoundException fileNotFoundException = new FileNotFoundException();
+            Exception ex = new Exception(fileNotFoundException);
+            ex.initCause(fileNotFoundException);
+            throw ex;
         }
         return accessKey;
     }
 
-    public static String getSecretKey() {
+    public static String getSecretKey() throws Exception {
         String secretKey = null;
         File file = new File("C:\\Temp\\creds.txt");
         try {
@@ -27,7 +30,11 @@ public class CredentialsHelper {
             secretKey = sc.nextLine();
             sc.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            FileNotFoundException fileNotFoundException = new FileNotFoundException();
+            Exception ex = new Exception(fileNotFoundException);
+            ex.initCause(fileNotFoundException);
+            throw ex;
+
         }
         return secretKey;
     }
