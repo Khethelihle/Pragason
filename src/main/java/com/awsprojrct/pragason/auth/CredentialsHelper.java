@@ -1,5 +1,7 @@
 package com.awsprojrct.pragason.auth;
 
+import com.awsprojrct.pragason.errors.Errors;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
