@@ -1,11 +1,9 @@
 package com.awsprojrct.pragason.DDB;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.awsprojrct.pragason.constants.Constants;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.util.Objects;
 
@@ -15,7 +13,9 @@ public class TableValidator {
     static DynamoDB dynamoDB = new DynamoDB(client);
     public static void CheckIfExist(String tableName) {
 
-        Table table = dynamoDB.getTable(Constants.QuestionTBL);
+        Table table = dynamoDB.getTable(Constants.UserTBL);
+
+//       // Need to fix the table DynamoDB check Validator.
 
         try {
 
@@ -24,7 +24,8 @@ public class TableValidator {
             } else {
                 table.getTableName();
                 System.out.println("Table " + tableName + " Not Found");
-                createTable(client, tableName);
+                //TableCreator.createTable(client,tableName,"Date",null, 5, 5);
+                TableCreator.createTable(client,tableName,"MockID","DomainID", 5, 5);
                 System.exit(1);  // The application should not exit here, it should create a table specified.
             }
 
@@ -52,8 +53,4 @@ public class TableValidator {
         }
 
     }
-    public static void createTable (AmazonDynamoDB client, String tableName) {
-
-    }
-
 }
