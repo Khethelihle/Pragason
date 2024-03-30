@@ -1,6 +1,8 @@
 package com.awsprojrct.pragason.Logger;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +12,9 @@ import static com.awsprojrct.pragason.constants.Constants.client;
 
 public class CustomLogger {
     DynamoDB dynamoDB = new DynamoDB(client);
+
+    private static final Logger logger = LogManager.getLogger("Initiating Application Logger Class : log4j");
+//    https://logging.apache.org/log4j/2.x/manual/eventlogging.html
     public static void SendToDDB (String tableName, String loggerBLT) {
 
         CheckIfExist(tableName);

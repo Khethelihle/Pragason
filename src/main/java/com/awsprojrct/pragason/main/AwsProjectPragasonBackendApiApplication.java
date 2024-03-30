@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import static com.awsprojrct.pragason.Logger.CustomLogger.SendToDDB;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 @SpringBootApplication

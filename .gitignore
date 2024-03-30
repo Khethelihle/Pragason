@@ -11,6 +11,7 @@ build/
 .factorypath
 .project
 .settings
+.gitignore
 .springBeans
 .sts4-cache
 bin/
@@ -28,10 +29,11 @@ out/
 
 ### NetBeans ###
 /nbproject/private/
-/nbbuild/
+/nbbuild/s
 /dist/
 /nbdist/
 /.nb-gradle/
 
 ### VS Code ###
 .vscode/
+

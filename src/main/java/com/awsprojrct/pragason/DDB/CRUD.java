@@ -6,7 +6,7 @@ public class CRUD {
 
     }
 
-    public static void RetrieveItems (String hashKeyValue, String rangeKeyValue) {
+    public static void RetrieveItems () {
 
     }
 
