@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.awsprojrct.pragason.constants.Constants.LoggerTimeOut;
+import static com.awsprojrct.pragason.Logger.CustomLogger.log;
 import static com.awsprojrct.pragason.constants.Constants.client;
 
 public class Schemas {
@@ -31,10 +31,10 @@ public class Schemas {
             PutItemOutcome outcome = table.putItem(item);
 
             //outcome.wait(LoggerTimeOut);
-            System.out.println("Done writing Records to DDB table: " + tableName);
+            log.info("Done writing Records to DDB table: {}", tableName);
 
         } catch (Exception e) {
-            System.err.println("Error in LoggerSchema: " + e);
+            log.error(e.getMessage());
         }
 
     }
@@ -53,19 +53,20 @@ public class Schemas {
                     .withList("Options", OptionsList)
                     .withString("Answer", Answer);
 
-            System.out.println("Writing Records to DDB table: " + tableName);
-            System.out.println(item.toJSONPretty());
+            log.info("Writing Records to DDB table: {}", tableName);
+            log.info(item.toJSONPretty());
 
             PutItemOutcome outcome = table.putItem(item);
 
 
 
         }catch (Exception e) {
-            System.err.println("Error in Questions Schema method: " + e);
+            log.warn("Error in Questions Schema method: ");
+            log.error(e.getMessage());
         }
     }
 
-    private static ArrayList<String> getStrings(String Options) {
+    public static ArrayList<String> getStrings(String Options) {
         List<String> optionslist = Arrays.asList(Options.split(","));
         String optionOne = optionslist.get(0);
         String optionTwo = optionslist.get(1);

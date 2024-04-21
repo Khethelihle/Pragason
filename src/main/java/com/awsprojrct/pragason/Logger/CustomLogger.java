@@ -13,6 +13,8 @@ import static com.awsprojrct.pragason.constants.Constants.client;
 public class CustomLogger {
     DynamoDB dynamoDB = new DynamoDB(client);
 
+    public static final Logger log = LogManager.getLogger(CustomLogger.class);
+
     private static final Logger logger = LogManager.getLogger("Initiating Application Logger Class : log4j");
 //    https://logging.apache.org/log4j/2.x/manual/eventlogging.html
     public static void SendToDDB (String tableName, String loggerBLT) {

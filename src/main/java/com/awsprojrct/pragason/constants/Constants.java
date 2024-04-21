@@ -14,6 +14,7 @@ public class Constants {
     public static String CatagoryTBL = "Catagory";
     public static String LoggerBLT = "Logger";
     public static int LoggerTimeOut = 30000;
+    public static boolean IsValidate;
 
 
 

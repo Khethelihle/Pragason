@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.awsprojrct.pragason.DDB.TableValidator.dynamoDB;
+import static com.awsprojrct.pragason.Logger.CustomLogger.log;
 
 public class TableCreator {
 
@@ -35,7 +36,7 @@ public class TableCreator {
                         .withWriteCapacityUnits(writeCapacityUnits));
 
         Table table = dynamoDB.createTable(request);
-        System.out.println("Creating table " + tableName);
+        log.info("Creating table {}", tableName);
 
         table.waitForActive();
 
