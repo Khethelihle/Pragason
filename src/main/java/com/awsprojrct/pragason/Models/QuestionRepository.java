@@ -8,7 +8,28 @@ import java.util.*;
 @Repository
 public class QuestionRepository {
 
-    private List<Question> questions = new ArrayList<>();
+    private static List<Question> questions = new ArrayList<>();
+
+    static Optional <Question> findById(Integer id) {
+        return  questions.stream().
+                filter(question -> question.QuestionID() == id).
+                findFirst();
+    }
+
+    void create(Question question) {
+        questions.add(question);
+    }
+
+    void update(Question question, Integer id){
+        Optional<Question> existingRun = findById(id);
+        if (existingRun.isPresent()) {
+            questions.set(questions.indexOf(existingRun.get()), question);
+        }
+    }
+
+    void delete(Integer id) {
+        questions.removeIf(question -> question.QuestionID().equals(id));
+    }
 
     List<Question> findAll() {
         return questions;
