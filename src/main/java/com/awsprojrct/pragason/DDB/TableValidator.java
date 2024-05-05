@@ -31,7 +31,7 @@ public class TableValidator {
             }
         } catch (Exception e) {
             System.err.println();
-            log.error("Retrieving table {}failed", tableName);
+            log.error("Retrieving table {} failed", tableName);
             log.error(e.getMessage());
         }
 //        DDBTableExist = true;

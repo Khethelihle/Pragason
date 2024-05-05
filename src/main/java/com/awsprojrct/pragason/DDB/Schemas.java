@@ -1,15 +1,12 @@
 package com.awsprojrct.pragason.DDB;
 
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
-import com.amazonaws.services.dynamodbv2.document.Table;
+
+import com.amazonaws.services.dynamodbv2.document.*;
 import com.awsprojrct.pragason.Logger.CustomLogger;
+import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.awsprojrct.pragason.Logger.CustomLogger.log;
 import static com.awsprojrct.pragason.constants.Constants.client;
@@ -17,6 +14,7 @@ import static com.awsprojrct.pragason.constants.Constants.client;
 public class Schemas {
 
     static final DynamoDB dynamoDB = new DynamoDB(client);
+
 
     public static void LoggerSchema (String tableName, String message) throws InterruptedException {
 
@@ -33,7 +31,7 @@ public class Schemas {
             //outcome.wait(LoggerTimeOut);
             log.info("Done writing Records to DDB table: {}", tableName);
 
-        } catch (Exception e) {
+        } catch (DynamoDbException e) {
             log.error(e.getMessage());
         }
 
@@ -58,9 +56,7 @@ public class Schemas {
 
             PutItemOutcome outcome = table.putItem(item);
 
-
-
-        }catch (Exception e) {
+        }catch (DynamoDbException e) {
             log.warn("Error in Questions Schema method: ");
             log.error(e.getMessage());
         }
@@ -81,4 +77,15 @@ public class Schemas {
         return OptionsList;
     }
 
+
+    public static String RetrieveItems(String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue) throws DynamoDbException  {
+
+        Table table = dynamoDB.getTable(tableName);
+
+        Item item = table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
+
+        return item.toJSONPretty();
+
+
+    }
 }
