@@ -4,7 +4,10 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.awsprojrct.pragason.DDB.Schemas;
+import com.awsprojrct.pragason.DDB.TableValidator;
+import com.awsprojrct.pragason.constants.Constants;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -25,30 +28,32 @@ public class QuestionRepository {
     private static List<Question> questions = new ArrayList<>();
 
 
-    static Optional <Question> findById(Integer id) {
-        return  questions.stream().
-                filter(question -> question.QuestionID() == id).
-                findFirst();
-    }
+    static Object findById(String id) {
+
+         return TableValidator.retrieveItem(Constants.QuestionTBL,"MockID", "Attempt01", "QuestionID", id);
+
+//         String tableName, String PrimaryKeyName, Object PrimaryKeyValue, Integer SortKeyName, Object SortKeyValue
+    };
 
     void create(Question question) {
         questions.add(question);
     }
 
-    void update(Question question, Integer id){
-        Optional<Question> existingRun = findById(id);
-        if (existingRun.isPresent()) {
-            questions.set(questions.indexOf(existingRun.get()), question);
-        }
-    }
+//    void update(Question question, Integer id){
+//        Optional<Question> existingRun = findById(id);
+//        if (existingRun.isPresent()) {
+//            questions.set(questions.indexOf(existingRun.get()), question);
+//        }
+//    }
 
     void delete(Integer id) {
         questions.removeIf(question -> question.QuestionID().equals(id));
     }
 
-    public static String findAll(String tableName) {
+    public static Object findAll(String tableName) {
 
-        return Schemas.RetrieveItems(tableName, "MockID", "Attempt01", "DomainID", "Data Catalog");
+        return Schemas.RetrieveItems(tableName, "MockID", "Attempt01", "QuestionID", 2);
+
     }
 
 //    @PostConstruct
@@ -58,7 +63,7 @@ public class QuestionRepository {
 //                "Attempt01",
 //                "Data Catalog",
 //                "Observed when the partitionKey value is not a valid value for the corresponding partitionKey data type.",
-//                "Observed when the partitionKey value is not a valid value for the corresponding partitionKey data type,Observed When the parttitionKey is encrypted,Observed when the partition key in S3 has been deleted and a table is not updated by the crawler,Observed when the console role does not have CreatePartitionIndex permissions"
+//                "Observed when the partitionKey value is not a valid value for the corresponding partitionKey data type,Observed When the PartitionKey is encrypted,Observed when the partition key in S3 has been deleted and a table is not updated by the crawler,Observed when the console role does not have CreatePartitionIndex permissions"
 //        ));
 //
 //        questions.add(new Question(2,

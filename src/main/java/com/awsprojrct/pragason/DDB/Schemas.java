@@ -2,8 +2,11 @@ package com.awsprojrct.pragason.DDB;
 
 
 import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.awsprojrct.pragason.Logger.CustomLogger;
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 
 
 import java.util.*;
@@ -16,7 +19,7 @@ public class Schemas {
     static final DynamoDB dynamoDB = new DynamoDB(client);
 
 
-    public static void LoggerSchema (String tableName, String message) throws InterruptedException {
+    public static void LoggerSchema(String tableName, String message) throws InterruptedException {
 
         try {
 
@@ -37,7 +40,7 @@ public class Schemas {
 
     }
 
-    public static void QuestionsSchema (String tableName, String hashKeyValue, String rangeKeyValue, String Question, String Options, String Answer ) {
+    public static void QuestionsSchema(String tableName, String hashKeyValue, String rangeKeyValue, String Question, String Options, String Answer) {
         try {
 
             Table table = dynamoDB.getTable(tableName);
@@ -46,7 +49,7 @@ public class Schemas {
 
             Item item = new Item()
                     .withString("MockID", hashKeyValue)
-                    .withString("DomainID", rangeKeyValue)
+                    .withString("QuestionID", rangeKeyValue)
                     .withString("Question", Question)
                     .withList("Options", OptionsList)
                     .withString("Answer", Answer);
@@ -56,7 +59,7 @@ public class Schemas {
 
             PutItemOutcome outcome = table.putItem(item);
 
-        }catch (DynamoDbException e) {
+        } catch (DynamoDbException e) {
             log.warn("Error in Questions Schema method: ");
             log.error(e.getMessage());
         }
@@ -78,14 +81,17 @@ public class Schemas {
     }
 
 
-    public static String RetrieveItems(String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue) throws DynamoDbException  {
+    public static Object RetrieveItems(String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue) {
 
-        Table table = dynamoDB.getTable(tableName);
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName(tableName);
 
-        Item item = table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
+        ScanResult result = client.scan(scanRequest);
 
-        return item.toJSONPretty();
-
+        return new ArrayList<>(result.getItems());
 
     }
+
+
 }
+

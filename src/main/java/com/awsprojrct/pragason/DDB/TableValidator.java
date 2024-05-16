@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.awsprojrct.pragason.constants.Constants;
+import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
+
 import static com.awsprojrct.pragason.Logger.CustomLogger.log;
 
 import java.util.Objects;
@@ -17,16 +19,16 @@ public class TableValidator {
     public boolean DDBTableExist = false;
 
     public static void CheckIfExist(String tableName) {
-        Table table = dynamoDB.getTable(Constants.UserTBL);
+        Table table = dynamoDB.getTable(Constants.QuestionTBL);
 //       // Need to fix the table DynamoDB check Validator.
         try {
-            if (Objects.equals(tableName, table.getTableName())) {
+            if (!Objects.equals(tableName, table.getTableName())) {
                 log.info("Table {} Found", tableName);
             } else {
                 table.getTableName();
                 log.error("Table {} Not Found", tableName);
                 //TableCreator.createTable(client,tableName,"Date",null, 5, 5);
-                TableCreator.createTable(client,tableName,"MockID","DomainID", 5, 5);
+                TableCreator.createTable(client,tableName,"MockID","QuestionID", 5, 5);
                 IsValidate = true;
             }
         } catch (Exception e) {
@@ -37,23 +39,18 @@ public class TableValidator {
 //        DDBTableExist = true;
     }
 
-    public static void retrieveItem(String tableName) {
+    public static Object retrieveItem (String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue)  {
 
         Table table = dynamoDB.getTable(tableName);
-        CheckIfExist(tableName);
-
         try {
 
-            Item item = table.getItem("Mock_ID", "GlueETL", "GlueETL01", "GlueETL01", "Mock_ID, GlueETL01, Question, Options, Answer", null);
+            return table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
 
-            System.out.println("Printing item after retrieving it....");
-            System.out.println(item.toJSONPretty());
+            //return table.getItem("MockID", "Attempt01", "QuestionID", "1");
 
+        } catch (DynamoDbException e) {
+            log.info("GetItem failed.");
+            return e.getMessage();
         }
-        catch (Exception e) {
-            System.err.println("GetItem failed.");
-            System.err.println(e.getMessage());
-        }
-
     }
 }

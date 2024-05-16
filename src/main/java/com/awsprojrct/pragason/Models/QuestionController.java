@@ -2,6 +2,7 @@ package com.awsprojrct.pragason.Models;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.awsprojrct.pragason.DDB.Schemas;
 import com.awsprojrct.pragason.errors.QuestionNotFoundException;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.awsprojrct.pragason.constants.Constants.QuestionTBL;
@@ -29,31 +31,25 @@ public class QuestionController {
     }
 
     @GetMapping("")
-    String findAll() {
+    Object findAll() {
         return QuestionRepository.findAll(QuestionTBL);
     }
 
 //    Get method
+    @GetMapping("/{id}")
+    Object findById(@PathVariable String id){
 
-//    Local memory Testing.
-//    @GetMapping("/{id}")
-//    Question findById(@PathVariable Integer id){
-//
-//        Optional <Question> question = QuestionRepository.findById(id);
-//
-//        if(question.isEmpty()) {
-//            throw new QuestionNotFoundException();
-//        }
-//        return question.get();
-//    }
+        return QuestionRepository.findById(id);
+    }
+
 //
 //
-////    POST method
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping("")
-//    void create (@Valid @RequestBody Question question){
-//        questionRepository.create(question);
-//    }
+//    POST method
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    void create (@Valid @RequestBody Question question){
+        questionRepository.create(question);
+    }
 //
 ////      UPDATE method
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

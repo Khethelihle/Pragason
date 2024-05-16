@@ -13,6 +13,7 @@ public class Constants {
 
     //    DynamoDB dynamoDB = new DynamoDB(client);
     public static String QuestionTBL = "Questions";
+    public  static String TestTBL = "test";
     public static String UserTBL = "Users";
     public static String CatagoryTBL = "Catagory";
     public static String LoggerBLT = "Logger";
