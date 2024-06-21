@@ -1,7 +1,6 @@
 package com.awsprojrct.pragason.DDB;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.awsprojrct.pragason.constants.Constants;
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
@@ -20,7 +19,7 @@ public class TableValidator {
 
     public static void CheckIfExist(String tableName) {
         Table table = dynamoDB.getTable(Constants.QuestionTBL);
-//       // Need to fix the table DynamoDB check Validator.
+
         try {
             if (!Objects.equals(tableName, table.getTableName())) {
                 log.info("Table {} Found", tableName);
@@ -36,7 +35,7 @@ public class TableValidator {
             log.error("Retrieving table {} failed", tableName);
             log.error(e.getMessage());
         }
-//        DDBTableExist = true;
+
     }
 
     public static Object retrieveItem (String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue)  {
@@ -44,9 +43,9 @@ public class TableValidator {
         Table table = dynamoDB.getTable(tableName);
         try {
 
-            return table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
+            Object item = table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
 
-            //return table.getItem("MockID", "Attempt01", "QuestionID", "1");
+            return item.toString();
 
         } catch (DynamoDbException e) {
             log.info("GetItem failed.");

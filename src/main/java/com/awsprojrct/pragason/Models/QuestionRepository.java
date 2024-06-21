@@ -2,57 +2,52 @@ package com.awsprojrct.pragason.Models;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.awsprojrct.pragason.DDB.Schemas;
 import com.awsprojrct.pragason.DDB.TableValidator;
 import com.awsprojrct.pragason.constants.Constants;
-import jakarta.annotation.PostConstruct;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
-
-import static com.awsprojrct.pragason.DDB.CRUD.RetrieveItems;
-import static com.awsprojrct.pragason.constants.Constants.dynamoDB;
+import static com.awsprojrct.pragason.DDB.Schemas.QuestionsSave;
 
 @Repository
 public class QuestionRepository {
 
-
+    private static final Log log = LogFactory.getLog(QuestionRepository.class);
 
     public QuestionRepository () {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
     }
 
-    private static List<Question> questions = new ArrayList<>();
-
-
     static Object findById(String id) {
 
          return TableValidator.retrieveItem(Constants.QuestionTBL,"MockID", "Attempt01", "QuestionID", id);
 
-//         String tableName, String PrimaryKeyName, Object PrimaryKeyValue, Integer SortKeyName, Object SortKeyValue
-    };
-
-    void create(Question question) {
-        questions.add(question);
     }
 
-//    void update(Question question, Integer id){
+    void create(Question questionItem) {
+
+        QuestionsSave(Constants.QuestionTBL, questionItem.getMockID(), questionItem.getQuestionID(), questionItem.getDomainID(), questionItem.getQuestionText(), questionItem.getQuestionsOptions(), questionItem.getCorrectAnswer());
+        log.info("Question Answer");
+        log.info(questionItem.getCorrectAnswer());
+    }
+
+//    void update(Question question, Integer id) {
 //        Optional<Question> existingRun = findById(id);
 //        if (existingRun.isPresent()) {
 //            questions.set(questions.indexOf(existingRun.get()), question);
 //        }
 //    }
 
-    void delete(Integer id) {
-        questions.removeIf(question -> question.QuestionID().equals(id));
+    void delete(String id) {
+
+        Schemas.DeleteItem(Constants.QuestionTBL, "Attempt01", id);
     }
 
     public static Object findAll(String tableName) {
 
-        return Schemas.RetrieveItems(tableName, "MockID", "Attempt01", "QuestionID", 2);
+        return Schemas.RetrieveItems(tableName);
 
     }
 

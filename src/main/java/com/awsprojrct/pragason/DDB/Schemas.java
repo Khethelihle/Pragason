@@ -2,12 +2,10 @@ package com.awsprojrct.pragason.DDB;
 
 
 import com.amazonaws.services.dynamodbv2.document.*;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.model.*;
 import com.awsprojrct.pragason.Logger.CustomLogger;
 import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
-import com.amazonaws.services.dynamodbv2.model.ScanRequest;
-import com.amazonaws.services.dynamodbv2.model.ScanResult;
-
 
 import java.util.*;
 
@@ -17,7 +15,6 @@ import static com.awsprojrct.pragason.constants.Constants.client;
 public class Schemas {
 
     static final DynamoDB dynamoDB = new DynamoDB(client);
-
 
     public static void LoggerSchema(String tableName, String message) throws InterruptedException {
 
@@ -40,7 +37,7 @@ public class Schemas {
 
     }
 
-    public static void QuestionsSchema(String tableName, String hashKeyValue, String rangeKeyValue, String Question, String Options, String Answer) {
+    public static void QuestionsSave(String tableName, String hashKeyValue, String rangeKeyValue, String Domain,String Question, String Options, String Answer) {
         try {
 
             Table table = dynamoDB.getTable(tableName);
@@ -50,9 +47,10 @@ public class Schemas {
             Item item = new Item()
                     .withString("MockID", hashKeyValue)
                     .withString("QuestionID", rangeKeyValue)
-                    .withString("Question", Question)
-                    .withList("Options", OptionsList)
-                    .withString("Answer", Answer);
+                    .withString("DomainID", Domain)
+                    .withString("QuestionText", Question)
+                    .withList("QuestionsOptions", OptionsList)
+                    .withString("CorrectAnswer", Answer);
 
             log.info("Writing Records to DDB table: {}", tableName);
             log.info(item.toJSONPretty());
@@ -80,18 +78,48 @@ public class Schemas {
         return OptionsList;
     }
 
+//    Will enhance this method on version 2.0
 
-    public static Object RetrieveItems(String tableName, String PrimaryKeyName, Object PrimaryKeyValue, String SortKeyName, Object SortKeyValue) {
 
-        ScanRequest scanRequest = new ScanRequest()
-                .withTableName(tableName);
+    public static String RetrieveItems(String tableName) {
 
-        ScanResult result = client.scan(scanRequest);
+        Map<String, AttributeValue> lastKeyEvaluated = null;
+        Map<String, AttributeValue> Resultitem = new HashMap<>();
+        do {
+            ScanRequest scanRequest = new ScanRequest()
+                    .withTableName(tableName)
+                    .withLimit(10)
+                    .withExclusiveStartKey(lastKeyEvaluated);
 
-        return new ArrayList<>(result.getItems());
+            ScanResult result = client.scan(scanRequest);
+
+            for (Map<String, AttributeValue> DDBItems : result.getItems()){
+
+                assert false;
+                Resultitem = DDBItems;
+                log.info(Resultitem);
+            }
+            lastKeyEvaluated = result.getLastEvaluatedKey();
+        } while (lastKeyEvaluated != null);
+
+        return Resultitem.toString();
 
     }
 
+    public static void DeleteItem (String tableName, String hashKeyValue, String rangeKeyValue) {
 
+        Table table = dynamoDB.getTable(tableName);
+        try {
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey(new PrimaryKey("MockID", hashKeyValue, "QuestionID", rangeKeyValue));
+
+            log.info("Attempting a conditional delete...");
+            table.deleteItem(deleteItemSpec);
+
+        }catch (DynamoDbException e) {
+            log.warn("Error in Deleting Item");
+            log.error(e.getMessage());
+        }
+    }
 }
 
