@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.awsprojrct.pragason.constants.Constants.QuestionTBL;
 
+@CrossOrigin
 @RestController
+//@RequestMapping(path="/JSON", produces="application/json")
 @RequestMapping("/api/questions")
 
 public class QuestionController {
