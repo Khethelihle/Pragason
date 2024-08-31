@@ -2,11 +2,15 @@ package com.awsprojrct.pragason.Models;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemUtils;
 import com.awsprojrct.pragason.DDB.Schemas;
 import com.awsprojrct.pragason.DDB.TableValidator;
 import com.awsprojrct.pragason.constants.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Repository;
 
 import static com.awsprojrct.pragason.DDB.Schemas.QuestionsSave;
@@ -22,7 +26,7 @@ public class QuestionRepository {
 
     static Object findById(String id) {
 
-         return TableValidator.retrieveItem(Constants.QuestionTBL,"MockID", "Attempt01", "QuestionID", id);
+       return TableValidator.retrieveItem(Constants.QuestionTBL,"MockID", "Attempt01", "QuestionID", id);
 
     }
 

@@ -1,5 +1,6 @@
 package com.awsprojrct.pragason.Models;
 
+import com.amazonaws.services.dynamodbv2.document.Item;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -20,4 +20,5 @@ public class AwsProjectPragasonBackendApiApplication  {
         return args -> {
         };
     }
+//    java -jar aws-project-pragason-backend-api-0.0.1-SNAPSHOT.jar
 }
