@@ -27,5 +27,4 @@ Deploymrny steps to AWS services will be added as the project grows.
 
 Pull requests are welcome. Please refer to the contribution guidelines before submitting a pull request.
 
-
-![Pragoson Project drawio](https://github.com/Khethelihle/Pragason/assets/30128691/0d657f0e-5455-4838-9ab1-73a40d679bb4)
+![Brainboard - Pragason](https://github.com/user-attachments/assets/f70d44c3-b735-43c1-8704-3d8e3751ce48)
