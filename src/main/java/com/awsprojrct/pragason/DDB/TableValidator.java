@@ -2,11 +2,8 @@ package com.awsprojrct.pragason.DDB;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.ItemUtils;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.awsprojrct.pragason.constants.Constants;
-import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
 
 import static com.awsprojrct.pragason.Logger.CustomLogger.log;
 
@@ -50,19 +47,5 @@ public class TableValidator {
         System.out.println(item);
         System.out.println("#####################");
         return item.toJSON();
-
-//        try {
-//
-//            Object item = table.getItem(PrimaryKeyName, PrimaryKeyValue, SortKeyName, SortKeyValue);
-//            System.out.println(item);
-//            System.out.println("#####################");
-//            return (Item) item;
-//
-//
-//        } catch (DynamoDbException e) {
-//            log.info("GetItem failed.");
-//            return e.getMessage().toString();
-//        }
-
     }
 }

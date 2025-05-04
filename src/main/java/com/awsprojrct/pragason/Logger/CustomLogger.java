@@ -3,10 +3,8 @@ package com.awsprojrct.pragason.Logger;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import static com.awsprojrct.pragason.DDB.TableValidator.CheckIfExist;
 import static com.awsprojrct.pragason.constants.Constants.client;
 
