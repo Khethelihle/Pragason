@@ -5,6 +5,7 @@ import software.amazon.awssdk.services.dynamodb.streams.endpoints.internal.Value
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Set;
 
 public class Question {
 
@@ -19,12 +20,12 @@ public class Question {
         @JsonProperty("CorrectAnswer")
         private String CorrectAnswer;
         @JsonProperty("QuestionsOptions")
-        private String QuestionsOptions;
+        private Set QuestionsOptions;
 
         public Question() {
         }
 
-        public Question(String questionID, String mockID, String domainID, String questionText, String correctAnswer, String questionsOptions) {
+        public Question(String questionID, String mockID, String domainID, String questionText, String correctAnswer, Set questionsOptions) {
                 this.QuestionID = questionID;
                 this.MockID = mockID;
                 this.DomainID = domainID;
@@ -53,7 +54,7 @@ public class Question {
                 return CorrectAnswer;
         }
 
-        public String getQuestionsOptions() {
+        public Set getQuestionsOptions() {
                 return QuestionsOptions;
         }
 
@@ -77,7 +78,7 @@ public class Question {
                 CorrectAnswer = correctAnswer;
         }
 
-        public void setQuestionsOptions(String questionsOptions) {
+        public void setQuestionsOptions(Set questionsOptions) {
                 QuestionsOptions = questionsOptions;
         }
 

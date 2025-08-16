@@ -4,11 +4,14 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import static com.awsprojrct.pragason.constants.Constants.QuestionTBL;
 
+@CrossOrigin
 @RestController
+//@RequestMapping(path="/JSON", produces="application/json")
 @RequestMapping("/api/questions")
 
 public class QuestionController {
@@ -20,12 +23,12 @@ public class QuestionController {
         this.questionRepository = questionRepository;
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     Object findAll() {
         return QuestionRepository.findAll(QuestionTBL);
     }
 
-//    Get method
+//    Get method By ID
     @GetMapping("/{id}")
     Object findById(@PathVariable String id){
 
@@ -34,17 +37,10 @@ public class QuestionController {
 
 //    POST method
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(" ")
+    @PostMapping(value = "/put", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
      void create (@Valid @RequestBody Question questionItem){
         questionRepository.create(questionItem);
     }
-//
-////      UPDATE method
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PutMapping("/{id}")
-//    void update(@Valid @RequestBody Question question, @PathVariable Integer id) {
-//        questionRepository.update(question, id);
-//    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
