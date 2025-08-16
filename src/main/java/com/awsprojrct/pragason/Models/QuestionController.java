@@ -23,12 +23,12 @@ public class QuestionController {
         this.questionRepository = questionRepository;
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     Object findAll() {
         return QuestionRepository.findAll(QuestionTBL);
     }
 
-//    Get method By Id
+//    Get method By ID
     @GetMapping("/{id}")
     Object findById(@PathVariable String id){
 
